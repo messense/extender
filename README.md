@@ -12,7 +12,11 @@ In your terminal run
 pip install https://github.com/messense/extender/archive/master.zip
 ```
 
-Or simply install it from PyPi by executing `pip install extender`
+Or simply install it from PyPi by executing
+
+```bash
+pip install extender
+```
 
 ## How to write a plugin
 

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 from extender import Plugin
-import plugin1
+import plugin2
 
 
-class TestPlugin1(Plugin):
-    title = 'Plugin1'
-    slug = 'plugin1'
+class TestPlugin2(Plugin):
+    title = 'Plugin2'
+    slug = 'plugin2'
     description = 'My awesome plugin!'
-    version = plugin1.__version__
+    version = plugin2.__version__
 
     author = 'Your Name'
     author_url = 'https://github.com/yourname/pluginname'
@@ -17,4 +17,4 @@ class TestPlugin1(Plugin):
         return msg
 
     def test_func2(self, a, b):
-        print('a - b = %i' % (a - b))
+        print('a + b = %i' % (a + b))
