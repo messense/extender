@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
 
-import extender
 long_description = open('README.md').read()
 
 setup(
     name='extender',
-    version=extender.__version__,
+    version='0.0.2',
     author='messense',
     author_email='messense@icloud.com',
     url='https://github.com/messense/extender',

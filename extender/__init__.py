@@ -4,7 +4,7 @@ from .plugin import plugins, register, unregister
 from .plugin import Plugin
 from .loader import install_plugins
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 def safe_execute(func, *args, **kwargs):
