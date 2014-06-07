@@ -111,6 +111,8 @@ from extender import plugins
 result = plugins.first('func_name', 1, 2)
 """ invoke func_name(1, msg='hello'), no return """
 plugins.call('func_name', 1, msg='hello')
+""" invoke hook func_name to modify value by every plugin then return it """
+value = plugins.hook('func_name', 1)
 ```
 
 ## LICENSE

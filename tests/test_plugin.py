@@ -26,5 +26,8 @@ def test_install_plugins():
     assert 'a + b = 3' in output
     assert 'a - b = 1' in output
 
+    value = plugins.hook('test_func3', 'test')
+    assert value == 'Plugin1 Plugin2 test'
+
 if __name__ == '__main__':
     nose.runmodule()

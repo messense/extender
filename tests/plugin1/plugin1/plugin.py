@@ -9,6 +9,7 @@ class TestPlugin1(Plugin):
     slug = 'plugin1'
     description = 'My awesome plugin!'
     version = plugin1.__version__
+    priority = 1
 
     author = 'Your Name'
     author_url = 'https://github.com/yourname/pluginname'
@@ -18,3 +19,6 @@ class TestPlugin1(Plugin):
 
     def test_func2(self, a, b):
         print('a - b = %i' % (a - b))
+
+    def test_func3(self, value):
+        return 'Plugin1 %s' % value

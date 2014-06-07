@@ -70,7 +70,8 @@ class PluginManager(InstanceManager):
 
     def all(self):
         for plugin in sorted(super(PluginManager, self).all(),
-                             key=lambda x: x.get_title()):
+                             key=lambda x: x.priority,
+                             reverse=True):
             if not plugin.is_enabled():
                 continue
             yield plugin
@@ -107,6 +108,21 @@ class PluginManager(InstanceManager):
                     'func_kwargs': kwargs,
                 }, exc_info=True)
                 continue
+
+    def hook(self, func_name, value, *args, **kwargs):
+        for plugin in self.all():
+            saved_value = value
+            try:
+                value = getattr(plugin, func_name)(value, *args, **kwargs)
+            except Exception as e:
+                logger = logging.getLogger('extender.errors')
+                logger.error('Error processing %s() on %r: %s', func_name, plugin.__class__, e, extra={
+                    'func_arg': args,
+                    'func_kwargs': kwargs,
+                }, exc_info=True)
+                value = saved_value  # rollback
+                continue
+        return value
 
     def register(self, cls):
         self.add('%s.%s' % (cls.__module__, cls.__name__))
@@ -148,6 +164,7 @@ class IPlugin(local):
     slug = None
     description = None
     version = None
+    priority = 0
     author = None
     author_url = None
     resource_links = ()
