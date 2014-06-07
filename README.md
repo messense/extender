@@ -30,7 +30,7 @@ For example, if you want to pull the version using pkg_resources (which is what 
 try:
     __version__ = __import__('pkg_resources') \
         .get_distribution(__name__).version
-except Exception, e:
+except Exception:
     __version__ = 'unknown'
 ```
 
