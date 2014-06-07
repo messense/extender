@@ -1,7 +1,9 @@
 extender
 ========
-
 A simple plug-in/extension system on Python inspired by Sentry project.
+
+[![Build Status](https://travis-ci.org/messense/extender.svg)](https://travis-ci.org/messense/extender)
+[![Coverage Status](https://coveralls.io/repos/messense/extender/badge.png)](https://coveralls.io/r/messense/extender)
 
 ## Installation
 In your terminal run
