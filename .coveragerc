@@ -1,0 +1,10 @@
+[run]
+source = extender, plugin1, plugin2, plugin3
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
