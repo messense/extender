@@ -94,25 +94,29 @@ That’s it! Users will be able to install your plugin via `pip install <package
 ## How to install plugins in your code
 
 ```python
-from extender import install_plugins
+from extender import PluginManager
 
-install_plugins('extender.plugins')
+plugins = PluginManager()
+plugins.install('extender.plugins')
 ```
 
-The `install_plugins` function takes an argument `entry_point` to install all plugins(just some python package)
+The `PluginManager.install` method takes an argument `entry_points` to install all plugins(just some python package)
 registered to that entry_point automatically.
 
 ## How to invoke a method of plugins
 
 ```python
-from extender import plugins
+from extender import PluginManager
+
+plugins = PluginManager()
+plugins.install('extender.plugins')
 
 """ invoke func_name(1, 2), return the result of the first called method """
 result = plugins.first('func_name', 1, 2)
-""" invoke func_name(1, msg='hello'), no return """
-plugins.call('func_name', 1, msg='hello')
-""" invoke hook func_name to modify value by every plugin then return it """
-value = plugins.hook('func_name', 1)
+""" invoke func_name(1, msg='hello'), return a list of result like map function """
+result_list = plugins.call('func_name', 1, msg='hello')
+""" invoke apply func_name to modify value by every plugin then return it """
+value = plugins.apply('func_name', 1)
 ```
 
 ## LICENSE

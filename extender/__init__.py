@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
-from .plugin import plugins, register, unregister
 from .plugin import Plugin
-from .loader import install_plugins
+from .manager import PluginManager
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 
 def safe_execute(func, *args, **kwargs):

@@ -18,7 +18,7 @@ class TestPlugin1(Plugin):
         return msg
 
     def test_func2(self, a, b):
-        print('a - b = %i' % (a - b))
+        return 'a - b = %i' % (a - b)
 
     def test_func3(self, value):
         return 'Plugin1 %s' % value
