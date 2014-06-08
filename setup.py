@@ -16,7 +16,8 @@ setup(
     keywords='extender, plugin, extension',
     long_description=long_description,
     install_requires=[
-        'six',
+        'six>=1.6.1',
+        'nose>=1.3.3',
     ],
     include_package_data=True,
     license='MIT License',

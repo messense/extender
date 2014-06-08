@@ -53,7 +53,6 @@ def test_plugins_apply():
 
 
 class TestPlugin(Plugin):
-    __test__ = False
     title = 'TestPlugin'
     slug = 'testplugin'
     description = 'My awesome plugin!'
