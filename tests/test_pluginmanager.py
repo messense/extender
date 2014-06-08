@@ -32,7 +32,7 @@ def test_plugin_get_with_nonexists_slug():
 @raises(StopIteration)
 def test_plugins_all_with_no_plugins_installed():
     plugins = PluginManager()
-    plugins.all().next()
+    next(plugins.all())
 
 
 def test_plugins_iteration():
