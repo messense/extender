@@ -39,25 +39,6 @@ class IPlugin(local):
             return True
         return True
 
-    def get_title(self):
-        """
-        Returns the general title for this plugin.
-        """
-        return self.title
-
-    def get_description(self):
-        """
-        Returns the description for this plugin. This is shown on the plugin configuration
-        page.
-        """
-        return self.description
-
-    def get_resource_links(self):
-        """
-        Returns a list of tuples pointing to various resources for this plugin.
-        """
-        return self.resource_links
-
 
 class PluginMount(type):
     def __new__(mcs, name, bases, attrs):

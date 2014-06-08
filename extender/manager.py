@@ -171,6 +171,7 @@ class PluginManager(InstanceManager):
                 cls = self.get(slug)
             except KeyError:
                 logger.error('No plugin named %s' % slug)
+                return
         if not hasattr(cls, '__name__'):
             # class instance
             cls = cls.__class__
