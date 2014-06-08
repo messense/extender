@@ -1,11 +1,16 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from setuptools import setup
 
-long_description = open('README.md').read()
+if os.path.exists('README.rst'):
+    long_description = open('README.rst').read()
+else:
+    long_description = open('README.md').read()
 
 setup(
     name='extender',
-    version='0.0.6',
+    version='0.0.7',
     author='messense',
     author_email='messense@icloud.com',
     url='https://github.com/messense/extender',
