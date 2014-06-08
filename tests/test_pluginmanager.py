@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import nose
-from extender import PluginManager
+from nose.tools import raises
+from extender import PluginManager, Plugin
 
 
 def test_plugins_install():
@@ -8,6 +9,20 @@ def test_plugins_install():
     plugins.install('extender.plugins')
     msg = plugins.first('test_func1', 'test')
     assert msg == 'test'
+
+
+def test_plugin_get():
+    plugins = PluginManager()
+    plugins.install('extender.plugins')
+
+    assert plugins.get('plugin1') is not None
+
+
+@raises(KeyError)
+def test_plugin_get_with_nonexists_slug():
+    plugins = PluginManager()
+    plugins.install('extender.plugins')
+    plugins.get('test-plugin')
 
 
 def test_plugins_enable():
@@ -37,13 +52,32 @@ def test_plugins_apply():
     assert value == 'Plugin1 Plugin2 test'
 
 
-def test_safe_execute():
-    from extender import safe_execute
+class TestPlugin(Plugin):
+    title = 'TestPlugin'
+    slug = 'testplugin'
+    description = 'My awesome plugin!'
+    version = '0.0.1'
+    priority = 2
+    author = 'Your Name'
+    author_url = 'https://github.com/yourname/pluginname'
 
-    def raise_error(e):
-        raise e
+    def test(self):
+        return 'test'
 
-    safe_execute(raise_error, KeyError)
+
+def test_plugin_register():
+    plugins = PluginManager()
+    plugins.register(TestPlugin)
+    assert plugins.first('test') == 'test'
+
+
+def test_plugin_unregister():
+    plugins = PluginManager()
+    plugins.install('extender.plugins')
+
+    assert len(plugins) == 3
+    plugins.unregister('plugin3')
+    assert len(plugins) == 2
 
 if __name__ == '__main__':
     nose.runmodule()

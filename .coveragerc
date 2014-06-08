@@ -1,5 +1,5 @@
 [run]
-source = extender, plugin1, plugin2, plugin3
+source = extender, tests
 
 [report]
 exclude_lines =

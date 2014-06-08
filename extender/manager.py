@@ -4,7 +4,7 @@ import logging
 import six
 from pkg_resources import iter_entry_points
 
-
+logging.basicConfig()
 logger = logging.getLogger('extender.manager')
 
 
@@ -157,6 +157,9 @@ class PluginManager(InstanceManager):
         return value
 
     def register(self, cls):
+        if not hasattr(cls, '__name__'):
+            # class instance
+            cls = cls.__class__
         self.add('%s.%s' % (cls.__module__, cls.__name__))
         return cls
 
@@ -168,9 +171,11 @@ class PluginManager(InstanceManager):
                 cls = self.get(slug)
             except KeyError:
                 logger.error('No plugin named %s' % slug)
-                return False
+        if not hasattr(cls, '__name__'):
+            # class instance
+            cls = cls.__class__
         self.remove('%s.%s' % (cls.__module__, cls.__name__))
-        return True
+        return cls
 
     def install(self, entry_points):
         for ep in iter_entry_points(entry_points):

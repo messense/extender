@@ -5,7 +5,7 @@ long_description = open('README.md').read()
 
 setup(
     name='extender',
-    version='0.0.5',
+    version='0.0.6',
     author='messense',
     author_email='messense@icloud.com',
     url='https://github.com/messense/extender',
