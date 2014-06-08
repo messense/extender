@@ -8,6 +8,7 @@ install:
   - python setup.py install
   - cd tests/plugin1 && python setup.py install && cd ../../
   - cd tests/plugin2 && python setup.py install && cd ../../
+  - cd tests/plugin3 && python setup.py install && cd ../../
   - pip install cov-core coverage coveralls nose-cov
 
 script: coverage run setup.py -q nosetests

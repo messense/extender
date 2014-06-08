@@ -10,12 +10,24 @@ def test_plugins_install():
     assert msg == 'test'
 
 
+def test_plugins_enable():
+    plugins = PluginManager()
+    plugins.install('extender.plugins')
+
+    len1 = len(plugins)
+    len2 = sum(1 for i in plugins.all(include_disabled=False))
+
+    assert len1 == 3
+    assert len2 == 2
+
+
 def test_plugins_call():
     plugins = PluginManager()
     plugins.install('extender.plugins')
     result = plugins.call('test_func2', 2, 1)
     assert 'a + b = 3' in result
     assert 'a - b = 1' in result
+    assert 'a * b = 2' not in result
 
 
 def test_plugins_apply():

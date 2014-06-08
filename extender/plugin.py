@@ -3,18 +3,6 @@ import six
 from threading import local
 
 
-class PluginMount(type):
-    def __new__(cls, name, bases, attrs):
-        new_cls = type.__new__(cls, name, bases, attrs)
-        if IPlugin in bases:
-            return new_cls
-        if not new_cls.title:
-            new_cls.title = new_cls.__name__
-        if not new_cls.slug:
-            new_cls.slug = new_cls.title.replace(' ', '-').lower()
-        return new_cls
-
-
 class IPlugin(local):
     """
     Plugin interface. Should not be inherited from directly.
@@ -69,6 +57,18 @@ class IPlugin(local):
         Returns a list of tuples pointing to various resources for this plugin.
         """
         return self.resource_links
+
+
+class PluginMount(type):
+    def __new__(mcs, name, bases, attrs):
+        new_cls = type.__new__(mcs, name, bases, attrs)
+        if IPlugin in bases:
+            return new_cls
+        if not new_cls.title:
+            new_cls.title = new_cls.__name__
+        if not new_cls.slug:
+            new_cls.slug = new_cls.title.replace(' ', '-').lower()
+        return new_cls
 
 
 class Plugin(six.with_metaclass(PluginMount, IPlugin)):

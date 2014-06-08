@@ -78,11 +78,11 @@ class PluginManager(InstanceManager):
     def __len__(self):
         return sum(1 for i in self.all())
 
-    def all(self):
+    def all(self, include_disabled=True):
         for plugin in sorted(super(PluginManager, self).all(),
                              key=lambda x: x.priority,
                              reverse=True):
-            if not plugin.is_enabled():
+            if not plugin.is_enabled() and not include_disabled:
                 continue
             yield plugin
 
@@ -93,7 +93,7 @@ class PluginManager(InstanceManager):
         raise KeyError(slug)
 
     def first(self, func_name, *args, **kwargs):
-        for plugin in self.all():
+        for plugin in self.all(include_disabled=False):
             try:
                 result = getattr(plugin, func_name)(*args, **kwargs)
             except Exception as e:
@@ -115,7 +115,7 @@ class PluginManager(InstanceManager):
 
     def call(self, func_name, *args, **kwargs):
         result = []
-        for plugin in self.all():
+        for plugin in self.all(include_disabled=False):
             saved_result = result
             try:
                 result.append(getattr(plugin, func_name)(*args, **kwargs))
@@ -136,7 +136,7 @@ class PluginManager(InstanceManager):
         return result
 
     def apply(self, func_name, value, *args, **kwargs):
-        for plugin in self.all():
+        for plugin in self.all(include_disabled=False):
             saved_value = value
             try:
                 value = getattr(plugin, func_name)(value, *args, **kwargs)
