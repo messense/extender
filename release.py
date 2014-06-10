@@ -6,12 +6,12 @@ import sys
 try:
     import pandoc
 except ImportError:
-    print('Please in pyandoc first, run pip install pyandoc.')
+    print('Please install pyandoc first, run pip install pyandoc.')
     sys.exit()
 
 pandoc_path = os.popen('which pandoc').read().strip()
 if not pandoc_path:
-    print('Cannot find pandoc executable file')
+    print('Cannot find pandoc executable file, you should install pandoc.')
     sys.exit()
 
 pandoc.core.PANDOC_PATH = pandoc_path
