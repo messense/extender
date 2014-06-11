@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, with_statement
 import os
 import sys
 
@@ -17,9 +18,9 @@ if not pandoc_path:
 pandoc.core.PANDOC_PATH = pandoc_path
 
 doc = pandoc.Document()
-doc.markdown = open('README.md').read()
-f = open('README.rst', 'w+')
-f.write(doc.rst)
-f.close()
+with open('README.md') as f:
+    doc.markdown = f.read()
+with open('README.rst', 'w+') as f:
+    f.write(doc.rst)
 os.system("python setup.py release")
 os.remove('README.rst')

@@ -58,7 +58,7 @@ class InstanceManager(object):
                 else:
                     results.append(cls)
             except Exception:
-                logger.exception('Unable to import %s' % cls_path)
+                logger.exception('Unable to import {cls}'.format(cls=cls_path))
                 continue
         self.cache = results
 
@@ -160,7 +160,10 @@ class PluginManager(InstanceManager):
         if not hasattr(cls, '__name__'):
             # class instance
             cls = cls.__class__
-        self.add('%s.%s' % (cls.__module__, cls.__name__))
+        self.add('{module}.{name}'.format(
+            module=cls.__module__,
+            name=cls.__name__
+        ))
         return cls
 
     def unregister(self, cls):
@@ -170,12 +173,15 @@ class PluginManager(InstanceManager):
             try:
                 cls = self.get(slug)
             except KeyError:
-                logger.error('No plugin named %s' % slug)
+                logger.error('No plugin named %s.', slug)
                 return
         if not hasattr(cls, '__name__'):
             # class instance
             cls = cls.__class__
-        self.remove('%s.%s' % (cls.__module__, cls.__name__))
+        self.remove('{module}.{name}'.format(
+            module=cls.__module__,
+            name=cls.__name__
+        ))
         return cls
 
     def install(self, entry_points):
@@ -184,7 +190,6 @@ class PluginManager(InstanceManager):
                 plugin = ep.load()
             except Exception:
                 import traceback
-                sys.stderr.write("Failed to load plugin %r:\n%s\n" % (ep.name, traceback.format_exc()))
-                logger.exception("Failed to load plugin %r:\n" % ep.name)
+                logger.exception("Failed to load plugin %r.", ep.name)
             else:
                 self.register(plugin)

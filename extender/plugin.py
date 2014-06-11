@@ -4,6 +4,7 @@ from threading import local
 
 
 class IPlugin(local):
+
     """
     Plugin interface. Should not be inherited from directly.
 
@@ -41,18 +42,24 @@ class IPlugin(local):
 
 
 class PluginMount(type):
+
     def __new__(mcs, name, bases, attrs):
         new_cls = type.__new__(mcs, name, bases, attrs)
         if IPlugin in bases:
             return new_cls
-        if not new_cls.title:
+        if not hasattr(new_cls, 'title'):
             new_cls.title = new_cls.__name__
-        if not new_cls.slug:
+        if not hasattr(new_cls, 'slug'):
             new_cls.slug = new_cls.title.replace(' ', '-').lower()
+        if not hasattr(new_cls, 'priority'):
+            new_cls.priority = 0
+        if not hasattr(new_cls, 'is_enabled'):
+            new_cls.is_enabled = lambda s: True
         return new_cls
 
 
 class Plugin(six.with_metaclass(PluginMount, IPlugin)):
+
     """
     A plugin should be treated as if it were a singleton. The owner does not
     control when or how the plugin gets instantiated, nor is it guaranteed that

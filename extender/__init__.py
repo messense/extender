@@ -3,7 +3,7 @@ import logging
 from .plugin import Plugin
 from .manager import PluginManager
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 logging.basicConfig()
 
@@ -17,10 +17,16 @@ def safe_execute(func, *args, **kwargs):
         else:
             cls = func.__class__
         logger = logging.getLogger('extender.errors.plugins')
-        logger.error('Error processing %r on %r: %s', func.__name__, cls.__name__, e, extra={
-            'func_module': cls.__module__,
-            'func_args': args,
-            'func_kwargs': kwargs,
-        }, exc_info=True)
+        logger.error('Error processing %r on %r: %s',
+                     func.__name__,
+                     cls.__name__,
+                     e,
+                     extra={
+                         'func_module': cls.__module__,
+                         'func_args': args,
+                         'func_kwargs': kwargs,
+                     },
+                     exc_info=True
+                     )
     else:
         return result

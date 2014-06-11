@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import nose
+import six
 from nose.tools import raises
 from extender import PluginManager, Plugin
+from extender.plugin import PluginMount
 
 
 def test_plugins_install():
@@ -15,7 +17,7 @@ def test_plugins_install_with_entry_points():
     assert len(plugins) == 3
 
 
-def test_plugin_get():
+def test_plugins_get():
     plugins = PluginManager()
     plugins.install('extender.plugins')
 
@@ -23,7 +25,7 @@ def test_plugin_get():
 
 
 @raises(KeyError)
-def test_plugin_get_with_nonexists_slug():
+def test_plugins_get_with_nonexists_slug():
     plugins = PluginManager()
     plugins.install('extender.plugins')
     plugins.get('test-plugin')
@@ -112,19 +114,32 @@ class TestPlugin(Plugin):
         return 'test'
 
 
-def test_plugin_register_with_class():
+class TestGenericPlugin(six.with_metaclass(PluginMount, object)):
+    title = 'TestGenericPlugin'
+
+    def test(self):
+        return 'test'
+
+
+def test_plugins_register_with_class():
     plugins = PluginManager()
     plugins.register(TestPlugin)
     assert plugins.first('test') == 'test'
 
 
-def test_plugin_register_with_instance():
+def test_plugins_register_with_instance():
     plugins = PluginManager()
     plugins.register(TestPlugin())
     assert plugins.first('test') == 'test'
 
 
-def test_plugin_unregister_with_slug():
+def test_plugins_register_generic_plugin_with_class():
+    plugins = PluginManager()
+    plugins.register(TestGenericPlugin)
+    assert plugins.first('test') == 'test'
+
+
+def test_plugins_unregister_with_slug():
     plugins = PluginManager()
     plugins.install('extender.plugins')
 
@@ -133,7 +148,7 @@ def test_plugin_unregister_with_slug():
     assert len(plugins) == 2
 
 
-def test_plugin_unregister_with_class():
+def test_plugins_unregister_with_class():
     plugins = PluginManager()
     plugins.register(TestPlugin)
 
@@ -142,7 +157,7 @@ def test_plugin_unregister_with_class():
     assert len(plugins) == 0
 
 
-def test_plugin_unregister_with_instance():
+def test_plugins_unregister_with_instance():
     plugins = PluginManager()
     plugins.register(TestPlugin)
 
