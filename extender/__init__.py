@@ -3,7 +3,7 @@ import logging
 from .plugin import Plugin
 from .manager import PluginManager
 
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 
 logging.basicConfig()
 

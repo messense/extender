@@ -31,14 +31,10 @@ class IPlugin(local):
     def is_enabled(self):
         """
         Returns a boolean representing if this plugin is enabled.
-
-        If ``project`` is passed, it will limit the scope to that project.
         """
-        if not self.enabled:
-            return False
         if not self.can_disable:
-            return True
-        return True
+            return True  # pragma: no cover
+        return self.enabled
 
 
 class PluginMount(type):

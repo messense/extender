@@ -15,5 +15,22 @@ def test_safe_execute_with_exception():
 
     safe_execute(raise_error, KeyError)
 
+
+class TestSafeExecute(object):
+
+    def normal(self, msg):
+        return msg
+
+    def raise_error(e):
+        raise e
+
+
+def test_safe_execute_with_instance_method():
+    test = TestSafeExecute()
+    msg = safe_execute(test.normal, 'test')
+    assert msg == 'test'
+
+    safe_execute(test.raise_error, KeyError)
+
 if __name__ == '__main__':
     nose.runmodule()

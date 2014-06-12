@@ -189,7 +189,6 @@ class PluginManager(InstanceManager):
             try:
                 plugin = ep.load()
             except Exception:
-                import traceback
                 logger.exception("Failed to load plugin %r.", ep.name)
             else:
                 self.register(plugin)

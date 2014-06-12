@@ -12,7 +12,7 @@ with open(readme) as f:
 
 setup(
     name='extender',
-    version='0.0.8',
+    version='0.0.9',
     author='messense',
     author_email='messense@icloud.com',
     url='https://github.com/messense/extender',

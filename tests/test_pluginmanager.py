@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import nose
 import six
-from nose.tools import raises
+from nose.tools import raises, with_setup
+import extender.manager
 from extender import PluginManager, Plugin
 from extender.plugin import PluginMount
 
@@ -15,6 +16,29 @@ def test_plugins_install():
 def test_plugins_install_with_entry_points():
     plugins = PluginManager(entry_points='extender.plugins')
     assert len(plugins) == 3
+
+
+def fake_iter_entry_points(entry_points):
+    class FakeEP(object):
+        name = 'FakeEP'
+
+    return [FakeEP(), FakeEP()]
+
+
+def setup_func():
+    extender.manager.iter_entry_points = fake_iter_entry_points
+
+
+def teardown_func():
+    from pkg_resources import iter_entry_points
+    extender.manager.iter_entry_points = iter_entry_points
+
+
+@with_setup(setup_func, teardown_func)
+def test_plugins_install_failed():
+    plugins = PluginManager(entry_points='extender.plugins')
+    print(plugins.class_list)
+    assert len(plugins) == 0
 
 
 def test_plugins_get():
@@ -145,6 +169,9 @@ def test_plugins_unregister_with_slug():
 
     assert len(plugins) == 3
     plugins.unregister('plugin3')
+    assert len(plugins) == 2
+
+    plugins.unregister('pluginnonexists')
     assert len(plugins) == 2
 
 

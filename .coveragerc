@@ -1,5 +1,5 @@
 [run]
-source = extender, tests
+source = extender
 
 [report]
 exclude_lines =
