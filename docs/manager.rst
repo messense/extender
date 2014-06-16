@@ -26,7 +26,9 @@ With a instance of ``PluginManager`` class, we can install plugins of a specific
 To setup a plugin manager and install plugins quickly you can do it by ::
 
     from extender import PluginManager
-    plugins = PluginManager(entry_points='extender.plugins')
+    plugins = PluginManager('extender.plugins')
+    # or
+    # plugins = PluginManager(entry_points='extender.plugins')
 
 
 Use plugins

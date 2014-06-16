@@ -67,7 +67,7 @@ class InstanceManager(object):
 
 class PluginManager(InstanceManager):
 
-    def __init__(self, class_list=None, instances=True, entry_points=None):
+    def __init__(self, entry_points=None, class_list=None, instances=True):
         super(PluginManager, self).__init__(class_list, instances)
         if entry_points:
             self.install(entry_points)

@@ -14,7 +14,7 @@ def test_plugins_install():
 
 
 def test_plugins_install_with_entry_points():
-    plugins = PluginManager(entry_points='extender.plugins')
+    plugins = PluginManager('extender.plugins')
     assert len(plugins) == 3
 
 
